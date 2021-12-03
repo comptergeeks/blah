@@ -7,11 +7,11 @@ public class Main {
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        System.out.println("What would you like your magic square to be like (?x?, enter one number)");
-        int squareCount = sc.nextInt();
-        int[][] magicSquare = magicSquareGenerator(squareCount);
-        int sum = squareCount * (squareCount * squareCount + 1) / 2;
-        if (isMagicSquare(magicSquare, sum).equals("true")) {
+        System.out.println("What would you like your magic square to be like (?x?, enter one number)"); //prompt user for 2d array size
+        int squareCount = sc.nextInt(); //get array size
+        int[][] magicSquare = magicSquareGenerator(squareCount); //get array from generator
+        int sum = squareCount * (squareCount * squareCount + 1) / 2; //get sum for each row/column/diagonal
+        if (isMagicSquare(magicSquare, sum).equals("true")) { //state if the 2d array is magic
             System.out.println("The square is magic.");
         } else {
             System.out.println("The square is not magic");
@@ -137,39 +137,39 @@ public class Main {
     }
     public static String isMagicSquare(int[][] magicSquare, int sum) {
         int[] checkSums = new int[magicSquare.length*2 + 2];
-        int counter = 0;
-        int counter2 = 0;
+        int counter = 0; //counter to make sure correct amount of sums are calculated
+        int counter2 = 0; //counter to add elements in array
         for (int rows = 0; rows < magicSquare.length; rows++) {
-            int sumOfRow = 0;
-            int sumOfColumn = 0;
+            int sumOfRow = 0; //sum of row
+            int sumOfColumn = 0; //sum of column
             for (int columns = 0; columns < magicSquare.length; columns++) {
-                sumOfRow += magicSquare[rows][columns];
-                sumOfColumn += magicSquare[columns][rows];
+                sumOfRow += magicSquare[rows][columns]; //add each element in the row to the sum
+                sumOfColumn += magicSquare[columns][rows]; //add each element in the column to the sum
             }
-            checkSums[counter2] = sumOfRow;
-            counter2++;
-            checkSums[counter2] = sumOfColumn;
-            counter2++;
+            checkSums[counter2] = sumOfRow; //add the sum of the row into the array we will check later to make sure all the sums are correct
+            counter2++; //move index up
+            checkSums[counter2] = sumOfColumn; //add the sum of the column into the array
+            counter2++; //move index up
 
         }
-        int sumOfDiagonalLeft = 0;
-        for (int i = 0; i < magicSquare.length; i++) {
+        int sumOfDiagonalLeft = 0; //left to right diagonal
+        for (int i = 0; i < magicSquare.length; i++) { //get sum of left to right diagonal
             sumOfDiagonalLeft+= magicSquare[i][i];
         }
         checkSums[counter2] = sumOfDiagonalLeft;
         counter2++;
-        int sumOfDiagonalRight = 0;
-        for (int i = magicSquare.length; i > 0; i--) {
+        int sumOfDiagonalRight = 0; //right to left diagonal
+        for (int i = magicSquare.length; i > 0; i--) { //get sum of right to left diagonal
             sumOfDiagonalRight += magicSquare[i - 1 ][magicSquare.length - i];
         }
         checkSums[counter2] = sumOfDiagonalRight;
         counter2++;
-        for (int i = 0; i < checkSums.length; i++) {
+        for (int i = 0; i < checkSums.length; i++) { //compare values in array to sum make sure each column, row, and diagonal has the right sum
             if(checkSums[i] == sum) {
                 counter++;
             }
         }
-        if (counter == magicSquare.length*2 + 2) {
+        if (counter == magicSquare.length*2 + 2) { //return true or false
             System.out.println(Arrays.toString(checkSums));
             return "true";
         } else {
