@@ -145,13 +145,6 @@ public class Main {
             for (int columns = 0; columns < magicSquare.length; columns++) {
                 sumOfRow += magicSquare[rows][columns];
                 sumOfColumn += magicSquare[columns][rows];
-                if (sumOfRow == sum) {
-                    counter++;
-                }
-                if (sumOfColumn == sum) {
-                    checkSums[counter] = sumOfColumn;
-                    counter++;
-                }
             }
             checkSums[counter2] = sumOfRow;
             counter2++;
@@ -165,18 +158,17 @@ public class Main {
         }
         checkSums[counter2] = sumOfDiagonalLeft;
         counter2++;
-        if (sumOfDiagonalLeft == sum) {
-            counter++;
-        }
         int sumOfDiagonalRight = 0;
         for (int i = magicSquare.length; i > 0; i--) {
             sumOfDiagonalRight += magicSquare[i - 1 ][magicSquare.length - i];
         }
-        if (sumOfDiagonalRight == sum) {
-            counter++;
-        }
         checkSums[counter2] = sumOfDiagonalRight;
         counter2++;
+        for (int i = 0; i < checkSums.length; i++) {
+            if(checkSums[i] == sum) {
+                counter++;
+            }
+        }
         if (counter == magicSquare.length*2 + 2) {
             System.out.println(Arrays.toString(checkSums));
             return "true";
